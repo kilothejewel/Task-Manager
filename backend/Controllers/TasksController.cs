@@ -1,6 +1,6 @@
 
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TaskManagerAPI.Controllers
 {
@@ -23,8 +23,8 @@ namespace TaskManagerAPI.Controllers
             {
                 return BadRequest("Title is required");
             }
-            
-            task.Priority = "Low"; 
+
+            task.Priority = "Low";
             tasks.Add(task);
             return Ok(task);
         }
@@ -33,7 +33,7 @@ namespace TaskManagerAPI.Controllers
         public IActionResult CompleteTask(int id)
         {
             var task = tasks.Find(t => t.Id == id);
-          
+
             task.Completed = true;
             return Ok(task);
         }
