@@ -1,5 +1,5 @@
-
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TaskManagerAPI.Controllers
@@ -34,7 +34,6 @@ namespace TaskManagerAPI.Controllers
         {
             var task = tasks.Find(t => t.Id == id);
 
-
             if (task == null)
             {
                 return NotFound($"Task with ID {id} was not found.");
@@ -49,8 +48,8 @@ namespace TaskManagerAPI.Controllers
     public class TaskItem
     {
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string Priority { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Priority { get; set; } = string.Empty;
         public bool Completed { get; set; }
     }
 }
