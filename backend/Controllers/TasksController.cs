@@ -34,7 +34,14 @@ namespace TaskManagerAPI.Controllers
         {
             var task = tasks.Find(t => t.Id == id);
 
+
+            if (task == null)
+            {
+                return NotFound($"Task with ID {id} was not found.");
+            }
+
             task.Completed = true;
+
             return Ok(task);
         }
     }
