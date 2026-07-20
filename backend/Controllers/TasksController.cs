@@ -19,12 +19,35 @@ namespace TaskManagerAPI.Controllers
         [HttpPost]
         public IActionResult AddTask(TaskItem task)
         {
+            task.Id = tasks.Count > 0 ? tasks.Max(t => t.Id) + 1 : 1;
+
             if (string.IsNullOrWhiteSpace(task.Title))
             {
                 return BadRequest("Title is required");
             }
 
-            task.Priority = "Low";
+            if (string.Equals(task.Priority, "High", StringComparison.OrdinalIgnoreCase))
+
+            {
+                task.Priority = "High";
+            }
+
+            else if (string.Equals(task.Priority, "Medium", StringComparison.OrdinalIgnoreCase))
+
+            {
+                task.Priority = "Medium";
+            }
+
+            else if (string.Equals(task.Priority, "Low", StringComparison.OrdinalIgnoreCase))
+
+            {
+                task.Priority = "Low";
+            }
+            else
+            {
+                return BadRequest("Priority must be High, Medium, or Low");
+            }
+
             tasks.Add(task);
             return Ok(task);
         }
