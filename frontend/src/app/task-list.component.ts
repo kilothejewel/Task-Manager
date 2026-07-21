@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-task-list',
+  imports: [CommonModule],
   template: `
     <div *ngFor="let task of tasks">
       {{ task.title }} - {{ task.priority }}
@@ -10,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
     </div>
   `
 })
+
 export class TaskListComponent implements OnInit {
   tasks: any[] = [];
 
@@ -21,14 +24,14 @@ export class TaskListComponent implements OnInit {
 
   loadTasks() {
    
-    this.http.get('/tasks').subscribe((data: any) => {
+    this.http.get('/api/tasks').subscribe((data: any) => {
       this.tasks = data;
     });
   }
 
   completeTask(id: number) {
    
-    this.http.get('/api/tasks/' + id).subscribe(() => {
+    this.http.put('/api/tasks/' + id, {}).subscribe(() => {
       this.loadTasks();
     });
   }
