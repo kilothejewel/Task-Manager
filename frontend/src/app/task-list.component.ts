@@ -7,10 +7,49 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-task-list',
   imports: [CommonModule, FormsModule],
   template: `
-    <div *ngFor="let task of tasks">
-      {{ task.title }} - {{ task.priority }}
-      <button (click)="completeTask(task.id)">Complete</button>
+    <div class="task-container">
+      <!-- Create Task Form -->
+      <section class="task-form">
+      <h3>Create New Task</h3>
+      <form (ngSubmit)="addTask()">
+        <input type="text" [(ngModel)]="newTaskTitle" name="title" placeholder="Task title..." />
+        <select [(ngModel)]="newTaskPriority" name="priority">
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+        <button type="submit">Add Task</button>
+      </form>
+      <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
+      </section>
+
+      <hr />
+
+      <!-- Filter Section -->
+      <section class="filters">
+      <h3>Filter Tasks</h3>
+      <label>Priority: </label>
+      <select [(ngModel)]="selectedPriority">
+      <option value="All">All</option>
+      <option value="High">High</option>
+      <option value="Medium">Medium</option>
+      <option value="Low">Low</option>
+    </select>
+  </section>
+
+  <hr />
+
+  <!-- Task List -->
+  <section class="task-list">
+  <h3>Tasks</h3>
+    <div *ngFor="let task of filteredTask">
+    <span [style.text-decoration]="task.completed ? 'line-through' : 'none'">[{{ task.priority }}] {{ task.title }}</span>
+    <button *ngIf="!task.completed" (click)="completeTask(task.id)">Mark Complete</button>
+    <span *ngIf="task.completed"> (Done)</span>
     </div>
+    <p *ngIf="filteredTask.length === 0">No tasks found.</p>
+  </section>
+  </div>
   `
 })
 
