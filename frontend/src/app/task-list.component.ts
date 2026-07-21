@@ -34,8 +34,14 @@ import { FormsModule } from '@angular/forms';
       <option value="High">High</option>
       <option value="Medium">Medium</option>
       <option value="Low">Low</option>
+      </select>
+      <label>Status: </label>
+      <select [(ngModel)]="selectedStatus">
+      <option value="All">All</option>
+      <option value="Completed">Completed</option>
+      <option value="Active">Active</option>
     </select>
-  </section>
+    </section>
 
   <hr />
 
