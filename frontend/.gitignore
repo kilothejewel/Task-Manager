@@ -10,6 +10,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+.env
 
 # Node
 **/node_modules
