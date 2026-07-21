@@ -55,4 +55,12 @@ export class TaskListComponent implements OnInit {
       this.loadTasks();
     });
   }
+
+  get filteredTask() {
+    return this.tasks.filter(task => {
+      const priorityMatch = this.selectedPriority === 'All' || task.priority === this.selectedPriority;
+      const statusMatch = this.selectedStatus === 'All' || (this.selectedStatus === 'Completed' ? task.completed : !task.completed);
+      return priorityMatch && statusMatch;
+    });
+  }
 }
