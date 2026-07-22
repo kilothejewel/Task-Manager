@@ -1,0 +1,35 @@
+Question 1: Explain the difference between an API integration error and a logic error.
+
+API Integration Error:
+    This happens when two systems (frontend and backend) cannot communicate properly. They either can't find each other or they speak a different "language".
+
+Logic Error:
+    The code compiles and the communication works fine but the computer does the wrong thing because the instructions we wrote are logically incorrect. The code runs but doesn't behave as intended.
+
+Question 2: What steps would you take to troubleshoot a non-responsive API call?
+    1. Check the Browsers developer tools(Network Tab)
+    2. Verify Server Status
+    3. Inspect Backend logic
+    4. Test the API independently
+    5. Check for CORS issues
+
+Question 3: Why is it importantb to seperate frontend and backend responsibilities?
+
+    1. Independent Scaling and Deployment
+    2. Security
+    3. Reusability
+    Team Division
+
+Question 4: Name a testing framework or tool you have used or researched and describe its purpose.
+
+    xUnit: A free, open source, community focused unit testing framework for .NET
+
+Question 5: How do you ensure your code remains maintainable over time?
+
+    1. Write Clean and Readable Code
+    2. Add Automated Testing
+    3.Documentation
+    4. Use Source Control
+    5. Strict Linting and Formatting
+
+
