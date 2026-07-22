@@ -1,0 +1,43 @@
+Backend Debugging Notes (TaskContoller.cs):
+
+Bug 1: Null Reference Crash
+
+In the CompleteTask method, the code calls tasks.Find(t => t.Id == id) and immediately executes task.Completed.true; without checking if task is null.
+If a client requested to complete an ID that didn't exist, this threw a NullReferenceException at runtime and crashed the request.
+
+We fixed this by adding a guard clause checking if (task == null). If it is null we return a (HTTP 404) NotFound response and stop execution. 
+
+Bug 2: Hardcoded Priority Override 
+
+In the AddTask method, the priority of every created task was hardcoded to "Low" (task.Priority = ""Low"), completely overriding sent by the user. 
+Fixed it by removing the line and added conditional checks to validate priority
+
+Bug 3: Missing task ID generation
+
+When adding a task, backend just stored the clients submitted task. Since task ID's are generated on the server, all new tasks defaulted to ID 0, making it impossible to identify or complete individual tasks later.
+Fixed it using LINQs . Max() function to automatically look up the highest existing ID and assign a new task (highestId + 1) or default to 1.
+
+Bug 4: Non - Nullable Property Compiler Warnings
+
+Got warnings for Title and Priority properties in TaskItem being non-nullable reference types but were not initialized to a default value in the constructor so I just added string.Empty to both properties. 
+
+
+Frontend Debugging Notes (task-list.component.ts):
+
+Bug 1: incorrect API Route path
+
+The loadTasks() method was calling this.http.get('/tasks'). The controller route was /api/tasks, so I just added it.
+
+Bug 2: Incorrect HTTP method for Task Completion
+
+The completeTask(id) method was using this.http.get to update the task state. The backend endpoint is configured to listen only for PUT requests resulting in an API error.
+I fixed this by changing the method to use this.http.put('/api/tasks' + id, {})
+
+Bug 7: UI unstable Array Reference Rendering
+
+Originally used an inline binding *ngFor="let task of filteredTask" where filteredTask was a typescript getter executing .filter() on every change detection pass.
+Because .filter() returns a new array reference in memory every single time it is evaluated, Angular got unstable and threw ExpressionChnagedAfterItHAsBeenCheckedError.
+Fixed it by removing the getter and replaced it with a plain array variable filteredTasks. 
+Added applyfilters() method and bound it when values change so it only runs when needed.
+
+
