@@ -59,7 +59,7 @@ import { FormsModule } from '@angular/forms';
     <span *ngIf="task.completed" class="task-status-done">Done</span>
     </div>
 
-    <button *ngIf="task.completed" (click)="completedTask(task.id)" class="btn-complete">
+    <button *ngIf="!task.completed" (click)="completedTask(task.id)" class="btn-complete">
     Mark Complete
     </button>
     </div>
