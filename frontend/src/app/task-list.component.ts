@@ -28,6 +28,8 @@ import { FormsModule } from '@angular/forms';
       <!-- Filter Section -->
       <section class="filters card">
       <h3>Filter Tasks</h3>
+      <div class="form-row">
+      <div class="filter-group" style="flex: 1;">
       <label>Priority: </label>
       <select [(ngModel)]="selectedPriority" (ngModelChange)="applyFilters()" style="width: 100%;">
       <option value="All">All</option>
