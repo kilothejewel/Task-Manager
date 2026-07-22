@@ -29,14 +29,14 @@ import { FormsModule } from '@angular/forms';
       <section class="filters">
       <h3>Filter Tasks</h3>
       <label>Priority: </label>
-      <select [(ngModel)]="selectedPriority">
+      <select [(ngModel)]="selectedPriority" (ngModelChange)="applyFilters()">
       <option value="All">All</option>
       <option value="High">High</option>
       <option value="Medium">Medium</option>
       <option value="Low">Low</option>
       </select>
       <label>Status: </label>
-      <select [(ngModel)]="selectedStatus">
+      <select [(ngModel)]="selectedStatus" (ngModelChange)="applyFilters()">
       <option value="All">All</option>
       <option value="Completed">Completed</option>
       <option value="Active">Active</option>
@@ -48,12 +48,12 @@ import { FormsModule } from '@angular/forms';
   <!-- Task List -->
   <section class="task-list">
   <h3>Tasks</h3>
-    <div *ngFor="let task of filteredTask">
+    <div *ngFor="let task of filteredTasks">
     <span [style.text-decoration]="task.completed ? 'line-through' : 'none'">[{{ task.priority }}] {{ task.title }}</span>
     <button *ngIf="!task.completed" (click)="completeTask(task.id)">Mark Complete</button>
     <span *ngIf="task.completed"> (Done)</span>
     </div>
-    <p *ngIf="filteredTask.length === 0">No tasks found.</p>
+    <p *ngIf="filteredTasks.length === 0">No tasks found.</p>
   </section>
   </div>
   `
@@ -61,6 +61,7 @@ import { FormsModule } from '@angular/forms';
 
 export class TaskListComponent implements OnInit {
   tasks: any[] = [];
+  filteredTasks: any[] = [];
   newTaskTitle: string = '';
   newTaskPriority: string = 'Low';
   selectedPriority: string = 'All';
@@ -77,6 +78,8 @@ export class TaskListComponent implements OnInit {
    
     this.http.get('/api/tasks').subscribe((data: any) => {
       this.tasks = data;
+      this.applyFilters();
+
     });
   }
 
@@ -101,9 +104,9 @@ export class TaskListComponent implements OnInit {
     });
   }
 
-  get filteredTask() {
-    return this.tasks.filter(task => {
-      const priorityMatch = this.selectedPriority === 'All' || task.priority === this.selectedPriority;
+  applyFilters() {
+    this.filteredTasks = this.tasks.filter(task => {
+      const priorityMatch = this .selectedPriority === 'All' || task.priority === this.selectedPriority;
       const statusMatch = this.selectedStatus === 'All' || (this.selectedStatus === 'Completed' ? task.completed : !task.completed);
       return priorityMatch && statusMatch;
     });
