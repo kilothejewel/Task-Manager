@@ -68,7 +68,7 @@
  ### Backend
  
  ```bash
- cd backend
+ cd backend.tests
 
  dotnet test 
 
